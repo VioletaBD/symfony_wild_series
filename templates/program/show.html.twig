@@ -7,6 +7,7 @@
 
 {% block body %}
 
-<h1>Program 4</h1>
+<h1>Page number {{ page }}.</h1>
+<a href="{{ path('program_list', {page: 5}) }}">Afficher la page 5</a>
 <p>{{id}}</p>
 {% endblock %}

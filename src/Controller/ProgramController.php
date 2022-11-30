@@ -12,27 +12,33 @@ class ProgramController extends AbstractController
     #[Route('/program/', name: 'program_index')]
     public function index(): Response
     {
-        return $this->render('program/index.html.twig', [
+        return $this->redirectToRoute('program/index.html.twig', [
             'website' => 'Wild Series',
         ]);
     }
 
-    // #[Route('/program/{id}', methods: ['GET'], name: 'program_show')]
-    // public function show(int $id, ProgramRepository $programRepository): Response
-    // {
-    //     // $this->$program();
-    //     $program = $programRepository;
-    //     $programRepository = new ProgramRepository();
-        
-    //     if (!$program) {
-    //         throw $this->createNotFoundException (
-    //             'Error : ' . $id . ' not found. '
-    //         );
-    //     }
-    //     return $this->render('program/show.html.twig', [
-    //         'program' => $program,
-    //     ]);
-    // }
+    #[Route('/program/list/{page}', requirements: ['page' => '\d+'], name: 'program_list')]
+    public function list(int $page): Response
 
+    {
+
+        return $this->redirectToRoute ('program_show', ['id' => 4]);
+    }
+
+    #[Route('/program/{id}', methods: ['GET'], name: 'program_show')]
+    public function show(int $id): Response
+    {
+        // , ProgramRepository $programRepository
+        // // $this->$program();
+        // $program = $programRepository;
+        // $programRepository = new ProgramRepository();
+
+        // if (!$program) {
+        //     throw $this->createNotFoundException (
+        //         'Error : ' . $id . ' not found. '
+        //     );
+        // }
+        return $this->redirectToRoute('program_show', ['id' => 4]);
+    }
 
 }
