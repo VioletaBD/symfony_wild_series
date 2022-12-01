@@ -7,13 +7,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+#[Route('/program', name: 'program')]
 class ProgramController extends AbstractController
 {
     #[Route('/program/', name: 'program_index')]
-    public function index(): Response
+    public function index(ProgramRepository $programRepository): Response
     {
-        return $this->redirectToRoute('program/index.html.twig', [
-            'website' => 'Wild Series',
+        $programs = $programRepository->findAll();
+
+        return $this->render('program/index.html.twig', [
+            'programs' => $programs,
         ]);
     }
 
@@ -25,20 +28,14 @@ class ProgramController extends AbstractController
         return $this->redirectToRoute ('program_show', ['id' => 4]);
     }
 
-    #[Route('/program/{id}', methods: ['GET'], name: 'program_show')]
-    public function show(int $id): Response
+    #[Route('/program/{id}/', requirements: ['id'=>'\d+'], name: 'program_list')]
+    public function showProgram(int $id, ProgramRepository $programRepository): Response
     {
-        // , ProgramRepository $programRepository
-        // // $this->$program();
-        // $program = $programRepository;
-        // $programRepository = new ProgramRepository();
-
-        // if (!$program) {
-        //     throw $this->createNotFoundException (
-        //         'Error : ' . $id . ' not found. '
-        //     );
-        // }
-        return $this->redirectToRoute('program_show', ['id' => 4]);
+        $program = $programRepository->findOneBy(['id' => $id]);
+        return $this->render('program/list.html.twig', [
+            'id' => $id,
+            'program' => $program
+        ]);
     }
 
 }
