@@ -1,13 +1,5 @@
 <?php
 
-<<<<<<< HEAD
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-
-class ProgramRepository extends ServiceEntityRepository
-{
-    
-}
-=======
 namespace App\Repository;
 
 use App\Entity\Program;
@@ -72,4 +64,3 @@ class ProgramRepository extends ServiceEntityRepository
 //        ;
 //    }
 }
->>>>>>> 747608f3c9f73d5442eebb9fd891f6ae81a4bace

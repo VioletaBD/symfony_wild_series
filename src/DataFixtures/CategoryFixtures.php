@@ -8,7 +8,7 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 
 class CategoryFixtures extends Fixture
 {
-    const CATEGORIES = [
+    public const CATEGORIES = [
         'Action',
         'Aventure',
         'Animation',
