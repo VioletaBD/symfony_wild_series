@@ -55,7 +55,7 @@ class ProgramController extends AbstractController
         $categories = $categoryRepository->findAll();
         $program = $programRepository->findOneBy(['id' => $id]);
 
-        return $this->render('program/season_show.html.twig', [
+        return $this->render('season/show.html.twig', [
             'season' => $season,
             'categories' => $categories,
             'program' => $program
