@@ -2,9 +2,9 @@
 
 namespace App\Repository;
 
-use App\DataFixtures\Episode;
-use Doctrine\Persistence\ManagerRegistry;
+use App\Entity\Episode;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @extends ServiceEntityRepository<Episode>
