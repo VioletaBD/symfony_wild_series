@@ -16,18 +16,26 @@ class ProgramController extends AbstractController
     public function index(ProgramRepository $programRepository): Response
     {
         $programs = $programRepository->findAll();
+        $categories = $categoryRepository->findAll();
 
         return $this->render('program/index.html.twig', [
             'programs' => $programs,
+            'categories' => $categories
         ]);
     }
 
-    #[Route('/program/list/{page}', requirements: ['page' => '\d+'], name: 'program_list')]
-    public function list(int $page): Response
+    #[Route('/program/{page}', requirements: ['id' => '\d+'], name: 'program_list')]
+    public function list(int $id, ProgramRepository $programRepository, CategoryRepository $categoryRepository): Response
 
     {
+        $categories = $categoryRepository->findAll();
+        $program = $programRepository->findOneBy(['id' => $id]);
 
-        return $this->redirectToRoute ('program_show', ['id' => ('')]);
+        return $this->render('program/list.html.twig', [
+            'id' => $id,
+            'program' => $program,
+            'categories' => $categories,
+        ]);
     }
 
     #[Route('/program/{id}/', requirements: ['id'=>'\d+'], name: 'program_list')]
