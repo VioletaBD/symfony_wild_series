@@ -38,11 +38,11 @@ class ProgramController extends AbstractController
         return $this->render('program/list.html.twig', [
             'id' => $id,
             'program' => $program,
-            'categories' => $categories,
+            'categories' => $categories
         ]);
     }
 
-    #[Route('/program/{id}/season/{seasonId}/', requirements: ['id'=>'\d+'], name: 'program_season_show')]
+    #[Route('/program/{programId}/season/{seasonId}/', requirements: ['id'=>'\d+'], name: 'program_season_show')]
     public function showSeasons(
         int $id, 
         int $seasonId, 
@@ -55,7 +55,7 @@ class ProgramController extends AbstractController
         $categories = $categoryRepository->findAll();
         $program = $programRepository->findOneBy(['id' => $id]);
 
-        return $this->render('season/show.html.twig', [
+        return $this->render('program/season_show.html.twig', [
             'season' => $season,
             'categories' => $categories,
             'program' => $program
