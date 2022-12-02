@@ -2,13 +2,14 @@
 
 namespace App\Controller;
 
+use App\Entity\Category;
+use App\Repository\SeasonRepository;
 use App\Repository\ProgramRepository;
 use App\Repository\CategoryRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-#[Route('/program', name: 'program')]
 class ProgramController extends AbstractController
 {
     #[Route('/program/', name: 'program_index')]
@@ -26,21 +27,22 @@ class ProgramController extends AbstractController
 
     {
 
-        return $this->redirectToRoute ('program_show', ['id' => 4]);
+        return $this->redirectToRoute ('program_show', ['id' => ('')]);
     }
 
     #[Route('/program/{id}/', requirements: ['id'=>'\d+'], name: 'program_list')]
     public function showProgram(int $id, ProgramRepository $programRepository): Response
     {
+        $categories = new Category;
         $program = $programRepository->findOneBy(['id' => $id]);
         return $this->render('program/list.html.twig', [
             'id' => $id,
             'program' => $program,
-            'categories' => $categories,
+            'categories' => $categories
         ]);
     }
 
-    #[Route('/program/{id}/season/{seasonId}/', requirements: ['id'=>'\d+'], name: 'program_season_show')]
+    #[Route('/program/{programId}/season/{seasonId}/', requirements: ['id'=>'\d+'], name: 'program_season_show')]
     public function showSeasons(
         int $id, 
         int $seasonId, 
