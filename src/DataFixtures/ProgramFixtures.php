@@ -10,20 +10,22 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
 class ProgramFixtures extends Fixture implements DependentFixtureInterface
 {
-    public const PROGRAM_LOOP = 5;
+    public const PROGRAM_NUMBER = 5;
     
     public function load(ObjectManager $manager): void
     {
-        foreach(CategoryFixtures::CATEGORIES as $key => $category){
-          for($i = 0 ; $i < 5 ; $i++){
-        $program = new Program();
-        $program->setTitle('Titre du film ' . $i);
-        $program->setSynopsis('This is test');
-        $program->setCategory($this->getReference('category_' . $category));
-        $this->addReference('program_' . $key .$i, $program);
-        $manager->persist($program);
-          }
-        }
+        foreach (CategoryFixtures::CATEGORIES as $categoryKey => $categoryName) {
+            for ($i = 0; $i < ProgramFixtures::PROGRAM_NUMBER; $i++) {
+                        $program = new Program();
+                        $program->setTitle('name');
+                        $program->setSynopsis($i);
+                        $category = $this->getReference(
+                            'category_' . $categoryKey
+                        );
+                        $category->setProgram($program);
+                        $manager->persist($program);
+                }
+            }
         $manager->flush();
     }
 

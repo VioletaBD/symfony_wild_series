@@ -22,8 +22,6 @@ class CategoryController extends AbstractController
     #[Route('/category/{categoryName}/', requirements: ['category'=>'{categoryName}'], name: 'category_show')]
     public function showCategory(string $categoryName, ProgramRepository $programRepository, CategoryRepository $categoryRepository): Response
     {
-        $categories = $categoryRepository->findAll();
-
         $category = $categoryRepository->findBy(['name' => $categoryName]);
 
         if (!$category) {
@@ -39,7 +37,7 @@ class CategoryController extends AbstractController
 
         return $this->render('category/show.html.twig', [
             'programs' => $programs,
-            'categories' => $categories,
+            // 'categories' => $categories,
         ]);
     }
 }
