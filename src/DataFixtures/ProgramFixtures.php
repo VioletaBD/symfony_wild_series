@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use Faker\Factory;
 use App\Entity\Program;
 use App\DataFixtures\CategoryFixtures;
 use Doctrine\Persistence\ObjectManager;
@@ -14,14 +15,18 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
     
     public function load(ObjectManager $manager): void
     {
-        foreach (CategoryFixtures::CATEGORIES as $categoryKey => $categoryName) {
+        $faker = Factory::create();
+        $programKey = 1;
+
+        foreach (CategoryFixtures::CATEGORIES as $category => $categoryName) {
             for ($i = 0; $i < ProgramFixtures::PROGRAM_NUMBER; $i++) {
                         $program = new Program();
-                        $program->setTitle('name');
-                        $program->setSynopsis($i);
+                        $program->setTitle($faker->sentence(2, true));
+                        $program->setSynopsis($faker->paragraph(3, true));
                         $category = $this->getReference(
-                            'category_' . $categoryKey
+                            'category_' . $category, $categoryName
                         );
+                        $this->addReference('program_' . $programKey, $program);
                         $category->setProgram($program);
                         $manager->persist($program);
                 }

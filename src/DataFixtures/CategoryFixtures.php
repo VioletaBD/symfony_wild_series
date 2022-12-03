@@ -18,7 +18,7 @@ class CategoryFixtures extends Fixture
 
     public function load(ObjectManager $manager)
     {
-        foreach(self::CATEGORIES as $categoryName){
+        foreach(self::CATEGORIES as $category => $categoryName){
             $category = new Category();
             $category->setName($categoryName);
             $this->addReference('category_' . $categoryName, $category);

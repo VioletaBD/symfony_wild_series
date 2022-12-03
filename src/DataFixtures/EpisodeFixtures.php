@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use Faker\Factory;
 use App\Entity\Episode;
 use App\DataFixtures\ProgramFixtures;
 use Doctrine\Persistence\ObjectManager;
@@ -14,15 +15,18 @@ class EpisodeFixtures extends Fixture implements DependentFixtureInterface
 
     public function load(ObjectManager $manager): void
     {
-        foreach (CategoryFixtures::CATEGORIES as $categoryKey => $categoryName) {
+        $faker = Factory::create();
+
+        foreach (CategoryFixtures::CATEGORIES as $categoryName) {
             for ($i = 0; $i < ProgramFixtures::PROGRAM_NUMBER; $i++) {
                 for ($j = 0; $j < SeasonFixtures::SEASON_NUMBER; $j++) {
                     for ($episodeKey = 0; $episodeKey < self::EPISODE_NUMBER; $episodeKey++) {
                         $episode = new Episode();
-                        $episode->setTitle('episode');
-                        $episode->setNumber($episodeKey + 1);
+                        $episode->setTitle($faker->sentence(3, true));
+                        $episode->setNumber($faker->numberBetween(1, 10));
+                        $episode->setSynopsis($faker->paragraph(3, true));
                         $season = $this->getReference(
-                            'category_' . $categoryKey . '_program_' . $i . 'season_' . $j
+                            'category_' . $categoryName . '_program_' . $i . 'season_' . $j, $episode
                         );
                         $episode->setSeason($season);
                         $manager->persist($episode);
