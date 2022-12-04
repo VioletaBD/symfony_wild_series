@@ -2,12 +2,15 @@
 
 namespace App\Controller;
 
+use App\Entity\Season;
+use App\Entity\Episode;
+use App\Entity\Program;
 use App\Entity\Category;
-use App\Repository\SeasonRepository;
 use App\Repository\ProgramRepository;
 use App\Repository\CategoryRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ProgramController extends AbstractController
@@ -24,34 +27,37 @@ class ProgramController extends AbstractController
         ]);
     }
 
-    #[Route('/program/{id}/', requirements: ['id'=>'\d+'], name: 'program_list')]
-    public function showProgram(int $id, ProgramRepository $programRepository, CategoryRepository $categoryRepository): Response
+    #[Route('/program/{program_id}/category/{category_id}', name: 'program_show_category')]
+    #[Entity('program', options: ['mapping' => ['program_id' => 'id']])]
+    #[Entity('category', options: ['mapping' => ['category_id' => 'id']])]
+    public function showProgramCategory(Program $program, Category $category): Response
     {
-        $categories = $categoryRepository->findAll();
-        $program = $programRepository->findOneBy(['id' => $id]);
         return $this->render('program/show.html.twig', [
-            'id' => $id,
             'program' => $program,
-            'categories' => $categories
+            'category' => $category,
         ]);
     }
 
-    #[Route('/program{id}/season/{seasonId}/', requirements: ['id'=>'\d+'], name: 'program_season_show')]
-    public function showSeasons(
-        int $id, 
-        int $seasonId, 
-        ProgramRepository $programRepository, 
-        SeasonRepository $seasonRepository, 
-        CategoryRepository $categoryRepository
-        )
+    #[Route('/season/{season_id}/program/{program_id}', name: 'season_show_program')]
+    #[Entity('season', options: ['mapping' => ['season_id' => 'id']])]
+    #[Entity('program', options: ['mapping' => ['program_id' => 'id']])]
+    public function showSeasonsProgram(Season $season, Program $program, )
     {
-        $season = $seasonRepository->findOneBy(['id' => $seasonId]);
-        $categories = $categoryRepository->findAll();
-        $program = $programRepository->findOneBy(['id' => $id]);
-
         return $this->render('season/show.html.twig', [
             'season' => $season,
-            'categories' => $categories,
+            'program' => $program
+        ]);
+    }
+
+    #[Route('/episode/{episode_id}/season/{season_id}/program/{program_id}', name: 'episode_show_season_show_program')]
+    #[Entity('episode', options: ['mapping' => ['episode_id' => 'id']])]
+    #[Entity('season', options: ['mapping' => ['season_id' => 'id']])]
+    #[Entity('program', options: ['mapping' => ['program_id' => 'id']])]
+    public function showEpisodeSeasonsProgram(Episode $episode, Season $season, Program $program, )
+    {
+        return $this->render('program/episode_show.html.twig', [
+            'episode' => $episode,
+            'season' => $season,
             'program' => $program
         ]);
     }

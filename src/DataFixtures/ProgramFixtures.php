@@ -19,7 +19,7 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
         $programKey = 1;
 
         foreach (CategoryFixtures::CATEGORIES as $category => $categoryName) {
-            for ($i = 0; $i < ProgramFixtures::PROGRAM_NUMBER; $i++) {
+            for ($i = 0; $i < self::PROGRAM_NUMBER; $i++) {
                         $program = new Program();
                         $program->setTitle($faker->sentence(2, true));
                         $program->setSynopsis($faker->paragraph(3, true));
