@@ -1,22 +1,17 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}Wild Series{% endblock %}
 {% block navbar %}
-    {% include './_navbar.html.twig' %}
+	{% include './_navbar.html.twig' %}
 {% endblock %}
+
+{% block title %}Wild Series
+{% endblock %}
+
 
 {% block body %}
-    <h1>Toutes les séries de la table program : </h1>
-    {% for program in programs %}
-        <div>
-            <h2>{{ loop.index }} / {{ program.title }} - Catégorie : {{ program.category.name }}</h2>
-            <p>{{ program.synopsis }}</p>
-        </div>
-    {% else %}
-        Aucune série trouvée.
-    {% endfor %}
+	<h1>Toutes les séries de la table program :
+	</h1>
+		{% include './program/show.html.twig' %}
 
-    <a href="{{ path('app_index') }}">
-        Retour à l'accueil
-    </a>
-{% endblock %}
+		<a href="{{ path('app_index') }}">
+			Retour à l'accueil
+		</a>
+	{% endblock %}

@@ -6,12 +6,12 @@
 {% endblock %}
 
 {% block body %}
-    <div class="media">
-        <div class="media-body">
-            <h1 class="mt-0">{{ program.category.name }}</h1>
-            <p>Programs : {{ program.title }}</p>
-        </div>
-    </div>
+
+    {% if programs in not null %}  
+
+    {% include 'program-card.html.twig' %}
+    {% else %}
+        <div><h5>Aucune série n'a été trouvée !</h5></div>
 
     <a href="{{ path('category_index') }}">
         Retour à la liste des categories
