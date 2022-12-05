@@ -6,10 +6,11 @@ use App\Entity\Category;
 use App\Form\CategoryType;
 use App\Repository\ProgramRepository;
 use App\Repository\CategoryRepository;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 
 class CategoryController extends AbstractController
 {
@@ -22,14 +23,13 @@ class CategoryController extends AbstractController
         ]);
     }
     
-    #[Route('/new', name: 'new')]
+    #[Route('/category/new', name: 'category_new')]
     public function new(Request $request, CategoryRepository $categoryRepository): Response
     {
         $category = new Category();
        
         // Create the form, linked with $category
         $form = $this->createForm(CategoryType::class, $category);
-        
         // Get data from HTTP request
 
     $form->handleRequest($request);
@@ -40,29 +40,26 @@ class CategoryController extends AbstractController
 
 
         // Redirect to categories list
-
         return $this->redirectToRoute('category_index');
-
         // Deal with the submitted data
         // For example : persiste & flush the entity
         // And redirect to a route that display the result
-
     }
         // Render the form (best practice)
         return $this->renderForm('category/new.html.twig', [
             'form' => $form,
         ]);
-
         // Alternative
         // return $this->render('category/new.html.twig', [
         //   'form' => $form->createView(),
         // ]);
     }
 
-    #[Route('/category/{categoryName}/', requirements: ['category'=>'{categoryName}'], name: 'category_show')]
-    public function showCategory(string $categoryName, ProgramRepository $programRepository, CategoryRepository $categoryRepository): Response
+    #[Route('/category/{categoryName}/', name: 'category_show')]
+    #[Entity('category', options: ['mapping' => ['categoryName' => 'name']])]
+    public function showCategory(string $categoryName, ProgramRepository $programRepository, Category $category): Response
     {
-        $category = $categoryRepository->findBy(['name' => $categoryName]);
+        // $category = $categoryRepository->findOneBy(['name' => $categoryName]);
 
         if (!$category) {
             throw $this->createNotFoundException('The Category ' . $categoryName . ' does not exist');
@@ -77,7 +74,7 @@ class CategoryController extends AbstractController
 
         return $this->render('category/show.html.twig', [
             'programs' => $programs,
-            // 'categories' => $categories,
+            'category' => $category,
         ]);
     }
 }

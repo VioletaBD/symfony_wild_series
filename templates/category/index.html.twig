@@ -1,16 +1,13 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Wild Series{% endblock %}
-{% block navbar %}
-    {% include './_navbar.html.twig' %}
-{% endblock %}
 
 {% block body %}
     <h1>Toutes les categories de la table category : </h1>
     {% for category in categories %}
         <div>
-            <h2>{{ loop.index }} / {{ program.category.name }} - Programs : {{ program.title }}</h2>
-             <a href="{{ path("category_show", {categoryName: category.name }) }}">{ id: category.id } Voir la fiche</a>
+            <h2>{{ loop.index }} / {{ category.name }}</h2>
+             <a href="{{ path("category_show", {categoryName: category.name }) }}">Voir les series</a>
         </div>
     {% else %}
         Aucune category trouvée.

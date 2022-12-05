@@ -1,16 +1,11 @@
 <nav class="navbar navbar-expand-lg">
 	<div class="collapse navbar-collapse" id="navbarNav">
 		<div class="container-fluid">
-			<a class="navbar-brand" href="#">WILD SERIES</a>
 
 			<ul class="dropdown-menu bg-primary">
-				{% for category in categories %}
 					<li>
-						<a class="dropdown-item" herf="{{ path('category_show') {categoryName: category.name}">{{category.name}}</a>
+						<a class="dropdown-item" href="{{ path('category_index') }}">Category :</a>
 					</li>
-				{% endfor %}
-					Films
-				</a>
 			</ul>
 		</div>
 	</div>

@@ -2,14 +2,11 @@
 	{% include './_navbar.html.twig' %}
 {% endblock %}
 
-{% block title %}Wild Series
-{% endblock %}
-
 
 {% block body %}
 	<h1>Toutes les séries de la table program :
 	</h1>
-		{% include './program/show.html.twig' %}
+		{% expand 'show.html.twig' %}
 
 		<a href="{{ path('app_index') }}">
 			Retour à l'accueil

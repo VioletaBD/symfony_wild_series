@@ -29,6 +29,15 @@ class ProgramController extends AbstractController
         ]);
     }
 
+    #[Route('/program/{programId}', name: 'program_show')]
+    public function showProgram(int $programId, ProgramRepository $programRepository): Response
+    {
+        $program = $programRepository->findOneBy(['id' => $programId]);
+        return $this->render('program/show.html.twig', [
+            'program' => $program
+        ]);
+    }
+    
     #[Route('/program/{program_id}/category/{category_id}', name: 'program_show_category')]
     #[Entity('program', options: ['mapping' => ['program_id' => 'id']])]
     #[Entity('category', options: ['mapping' => ['category_id' => 'id']])]
@@ -72,7 +81,7 @@ class ProgramController extends AbstractController
         // ]);
     }
 
-    #[Route('/season/{season_id}/program/{program_id}', name: 'season_show_program')]
+    #[Route('program/{program_id}/season/{season_id}/', name: 'season_show_program')]
     #[Entity('season', options: ['mapping' => ['season_id' => 'id']])]
     #[Entity('program', options: ['mapping' => ['program_id' => 'id']])]
     public function showSeasonsProgram(Season $season, Program $program, )

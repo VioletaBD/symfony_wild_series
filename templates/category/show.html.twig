@@ -1,19 +1,20 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Catégorie {{ category.id }}{% endblock %}
-{% block navbar %}
-    {% include './_navbar.html.twig' %}
-{% endblock %}
+{% block title %}Catégorie :{{ category.id }}{% endblock %}
 
 {% block body %}
 
-    {% if programs in not null %}  
+    {% for program in programs %}  
 
-    {% include 'program-card.html.twig' %}
+    <h2>{{ program.title }}</h2>
+    <a href="{{ path('program_show', { programId: program.id}) }}">
+       Voir la fiche
+    </a>
     {% else %}
-        <div><h5>Aucune série n'a été trouvée !</h5></div>
+    <h5>Aucune category n'a été trouvée !</h5>
 
     <a href="{{ path('category_index') }}">
         Retour à la liste des categories
     </a>
+    {% endfor %}
 {% endblock %}
