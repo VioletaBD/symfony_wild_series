@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Seasons :
+{% endblock %}
+{# {% block navbar %}
+    {% include './_navbar.html.twig' %}
+{% endblock %} #}
+{% block body %}
+
+	<h3 class="p-4 container-fluid text-center">{{ program.title }}</h3>
+	<h3 class="p-4 container-fluid text-center">{{ season.number }}</h3>
+	<div class="m-3">
+		<h3>{{ episode.title }}</h3>
+		<p>{{ episode.synopsis }}</p>
+	</div>
+
+{% endblock %}

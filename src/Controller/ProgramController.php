@@ -18,14 +18,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class ProgramController extends AbstractController
 {
     #[Route('/program/', name: 'program_index')]
-    public function index(ProgramRepository $programRepository, CategoryRepository $categoryRepository): Response
+    public function index(ProgramRepository $programRepository): Response
     {
         $programs = $programRepository->findAll();
-        $categories = $categoryRepository->findAll();
 
         return $this->render('program/index.html.twig', [
             'programs' => $programs,
-            'categories' => $categories
         ]);
     }
 
@@ -49,7 +47,7 @@ class ProgramController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'new')]
+    #[Route('/program/new', name: 'new')]
     public function new(
         Request $request, ProgramRepository $programRepository, SeasonRepository $seasonRepository
         ): Response
@@ -81,7 +79,7 @@ class ProgramController extends AbstractController
         // ]);
     }
 
-    #[Route('program/{program_id}/season/{season_id}/', name: 'season_show_program')]
+    #[Route('program/{program_id}/season/{season_id}/', name: 'program_season_show')]
     #[Entity('season', options: ['mapping' => ['season_id' => 'id']])]
     #[Entity('program', options: ['mapping' => ['program_id' => 'id']])]
     public function showSeasonsProgram(Season $season, Program $program, )
@@ -92,7 +90,7 @@ class ProgramController extends AbstractController
         ]);
     }
 
-    #[Route('/episode/{episode_id}/season/{season_id}/program/{program_id}', name: 'episode_show_season_show_program')]
+    #[Route('/program/{program_id}/season/{season_id}/episode/{episode_id}', name: 'program_episode_show')]
     #[Entity('episode', options: ['mapping' => ['episode_id' => 'id']])]
     #[Entity('season', options: ['mapping' => ['season_id' => 'id']])]
     #[Entity('program', options: ['mapping' => ['program_id' => 'id']])]
