@@ -19,7 +19,7 @@
 				<span>Saisons disponibles :</span>
 				{% for season in program.seasons %}
 			
-					<a class="link-seasons p-1 text-light" href="{{ path('season_show') }}"</a>
+					<a href={{ path("program_season_show", {program_id: program.id, season_id: season.id } ) }}>Voir la saison :{{ season.number}} </a>
 				{% endfor %}
 			</div>
 		</div>
