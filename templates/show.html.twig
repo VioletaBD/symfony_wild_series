@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Seasons :{% endblock %}
+{# {% block navbar %}
+    {% include './_navbar.html.twig' %}
+{% endblock %} #}
+{% block body %}
+
+    <h3 class="p-4 container-fluid text-center">{{ program.title }}</h3>
+        <h3 class="p-4 container-fluid text-center">{{ season.number }}</h3>
+    <div class="m-3">
+        <h3>Liste des épisodes :</h3>
+        <div class="row g-3">
+            {% for episode in season.episodes %}
+                <div class="col-12">
+                    <div class="bg-light p-2">
+                        <h4>{{ episode.title }}</h4>
+                        <p>{{ episode.synopsis }}<p>
+                        <a href="{{ path('program_episode_show', { program_id: program.id, season_id: season.id, episode_id: episode.id})}}">Voir l'episode</a>
+                    </div>
+                </div>
+        {% else %}
+            <div>Désolé, il n'y a pas encore d'épisodes publiés.</div>
+        {% endfor %}
+        </div>
+    </div>  
+{% endblock %}

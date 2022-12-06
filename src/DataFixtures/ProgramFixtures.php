@@ -24,10 +24,10 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
                         $program->setTitle($faker->sentence(2, true));
                         $program->setSynopsis($faker->paragraph(3, true));
                         $category = $this->getReference(
-                            'category_' . $category, $categoryName
+                            'category_' . $categoryName
                         );
-                        $this->addReference('program_' . $programKey, $program);
-                        $category->setProgram($program);
+                        $this->addReference('category_' . $categoryName . '_program_' . $i, $program);
+                        $program->setCategory($category);
                         $manager->persist($program);
                 }
             }

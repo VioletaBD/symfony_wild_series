@@ -6,7 +6,16 @@
 {% block body %}
 	<h1>Toutes les séries de la table program :
 	</h1>
-		{% expand 'show.html.twig' %}
+
+	{% for program in programs %}
+
+    <h2>{{ program.title }}</h2>
+    <a href="{{ path('program_show', { programId: program.id}) }}">
+       Voir la fiche
+    </a>
+    {% else %}
+    <h5>Aucun programme n'a été trouvée !</h5>
+    {% endfor %}
 
 		<a href="{{ path('app_index') }}">
 			Retour à l'accueil
