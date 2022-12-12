@@ -11,14 +11,24 @@ use App\Repository\ProgramRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+#[Route('/program')]
 class ProgramController extends AbstractController
 {
     #[Route('/program/', name: 'program_index')]
-    public function index(ProgramRepository $programRepository): Response
+    public function index(RequestStack $requestStack, ProgramRepository $programRepository): Response
     {
+        $session = $requestStack->getSession();
+        if (!$session->has('total')) {
+            $session->set('total', 0); // if total doesn’t exist in session, it is initialized.
+        }
+        $total = $session->get('total'); // get actual value in session with ‘total' key.
+    
+        // ...
         $programs = $programRepository->findAll();
 
         return $this->render('program/index.html.twig', [
@@ -26,7 +36,7 @@ class ProgramController extends AbstractController
         ]);
     }
 
-    #[Route('/program/new', name: 'program_new')]
+    #[Route('/program/new', name: 'program_new', methods: ['GET', 'POST'])]
     public function new(
         Request $request,
         ProgramRepository $programRepository
@@ -34,11 +44,13 @@ class ProgramController extends AbstractController
         $program = new Program();
         $form = $this->createForm(ProgramType::class, $program);
         $form->handleRequest($request);
-        if ($form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $programRepository->save($program, true);
+            $this->addFlash ('success', 'The new program has been created');
             return $this->redirectToRoute('program_index');
         }
         return $this->renderForm('program/new.html.twig', [
+            'program' => $program,
             'form' => $form,
         ]);
     }
