@@ -1,0 +1,19 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+Acteur
+{{ actor.name}}
+{% {% endblock %}
+%}
+
+<strong>Acteurs :</strong>
+
+<ul>
+			<h1 class="p-2">
+				{{ actor.name}}</h1>
+			{% for program in actor.programs %}
+				<p>{{ program.title }}</p>
+			{% endfor %}
+</ul>
+	<a herf="{{ path('category_index') }}">Voir les categories</a>
+{% endblock %}
