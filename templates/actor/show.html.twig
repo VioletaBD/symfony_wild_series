@@ -1,19 +1,18 @@
 {% extends "base.html.twig" %}
 
 {% block title %}
-Acteur
-{{ actor.name}}
-{% {% endblock %}
-%}
+	Acteur
+	{{ actor.name}}
+	{% {% endblock %}
+	%}
 
-<strong>Acteurs :</strong>
-
-<ul>
-			<h1 class="p-2">
-				{{ actor.name}}</h1>
-			{% for program in actor.programs %}
-				<p>{{ program.title }}</p>
-			{% endfor %}
-</ul>
+	<strong>Acteurs :</strong>
+	<ul>
+		{% for actor in program.actors %}
+			<li>{{ actor.name }}</li>
+		{% else %}
+			<li>Aucun acteur pour cette série</li>
+		{% endfor %}
+	</ul>
 	<a herf="{{ path('category_index') }}">Voir les categories</a>
 {% endblock %}

@@ -17,20 +17,17 @@ class ActorFixtures extends Fixture implements DependentFixtureInterface
     {
         $faker = Factory::create();
 
-        foreach (CategoryFixtures::CATEGORIES as $category => $categoryName) {
-            for ($i = 0; $i < ProgramFixtures::PROGRAM_NUMBER; $i++) {
-                for ($iActor = 1; $iActor < self::ACTORS; $iActor++) {
-                    $name = $faker->lastName() . ' ' . $faker->firstName();
-                    $actor = new Actor();
-                    $actor->setName($name);
-                    for ($j = 1; $j < self::SERIES_BY_ACTOR; $j++) {
-                        $program = $this->getReference('category_' . $categoryName . '_program_' . $i);
-                        $actor->addProgram($program);
-                        $manager->persist($actor);
-                    }
-                }
-                $manager->flush();
+        for ($i = 0; $i < self::ACTORS; $i++) {
+            $actor = new Actor();
+            $actor->setName($faker->name());
+            $programByActor = self::SERIES_BY_ACTOR;
+            $this->addReference('actor_' . $i, $actor);
+            for ($j = 0; $j < $programByActor; $j++) {
+                $actor->addProgram($this->getReference('category_' . CategoryFixtures::CATEGORIES[$faker->numberBetween(0, 4)] . '_program_' . $faker->numberBetween(1, 3)));
             }
+            $manager->persist($actor);
+
+            $manager->flush();
         }
     }
 
